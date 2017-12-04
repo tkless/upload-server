@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Tea Kless <tea.kless@web.de> 2017">
+<meta name="license" content="The MIT License (MIT)">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/dropzone.css">
+
+<div class="container">
+
+  <div>
+    <form id="upload_widget" method="post" action="http://localhost:8080/upload" class="dropzone">
+      <div class="fallback">
+        <input name="file" type="file">
+      </div>
+    </form>
+    <div>
+      <input class="foldername" name="folder" type="text" placeholder="Upload Folder Name...">
+      <button type="button" class="start btn btn-primary"> upload </button>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/dropzone.js"></script>
+
+<script type="text/javascript">
+  Dropzone.options.uploadWidget = {
+    headers: {
+      "Cache-Control": "",
+      "X-Requested-With": ""
+    },
+    paramName: 'file',
+    maxFileSize: 4, // MB
+    parallelUploads: 100,
+    uploadMultiple: true,
+    autoProcessQueue: false,
+    dictDefaultMessage: 'Drag an image here to upload, or click to select one',
+    acceptedFiles: 'image/*',
+    init: function() {
+      myDropzone = this;
+
+      var folder = document.querySelector( '.foldername' ).value;
+      this.on("sending", function(file, xhr, formData) {
+        formData.append( "folder", folder );
+        console.log("folder: ", folder, formData);
+      });
+
+      this.on('success', function( file, resp ){
+        console.log( file );
+        console.log( resp );
+      });
+
+      document.querySelector('.start' ).addEventListener("click", function() {
+        myDropzone.processQueue();
+      });
+
+    }
+  };
+</script>

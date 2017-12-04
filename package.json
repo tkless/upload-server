@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "express": "latest",
+    "formidable": "latest",
+    "fs-extra": "latest",
+    "http": "latest",
+    "https": "latest",
+    "mkdirp": "latest",
+    "path": "latest",
+    "util": "latest"
+  }
+}
